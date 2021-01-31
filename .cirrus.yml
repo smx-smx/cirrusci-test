@@ -1,0 +1,5 @@
+container:
+  image: gcc:latest
+
+install_script: apt install -y libcapstone-dev
+script: ./build.sh
