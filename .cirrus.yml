@@ -1,6 +1,30 @@
-container:
-  image: gcc:latest
+build_linux_x64:
+  container:
+    image: gcc:latest
 
-install_script: apt install -y libcapstone-dev
-task:
-  script: ./build.sh
+  install_script: apt install -y libcapstone-dev
+  script:
+    - ./build.sh
+
+build_freebsd_x64:
+  freebsd_instance:
+    image_family: freebsd-12-1
+
+  install_script: pkg install -y capstone
+  script:
+    - ./build.sh
+
+build_darwin_x64:
+  macos_instance:
+    image: big-sur-xcode-12.4
+
+  install_script: brew install pkg-config cmake capstone
+  script:
+    - ./build.sh
+
+build_windows_x64:
+  windows_container:
+    image: cirrusci/windowsservercore:cmake
+    os_version: 2019
+  script:
+    - C:\msys64\usr\bin\bash.exe -lc "./build.sh"
